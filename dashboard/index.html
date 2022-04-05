@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laser graphics</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="icon" href="https://www.fashionmonitor.com/assets/favicons/ii/android-chrome-192x192.png"
+          type="image/png" sizes="16x16">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container main-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">
+                            <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> Laser Metrics
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <hr>
+            <h3>Select port , set sensor count and pixel density, then press start to connect</h3>
+            <div class="shadow-2">
+
+                <label for="port_select">Select connected com port</label>
+                <select class="form-control" id="port_select" onchange="changeSelectedPort(this)"></select>
+
+                <label for="scale_count" class="mg-top-10">How many sensors</label>
+                <input type="number" class="form-control" min="1" value="1" id="scale_count">
+
+                <label for="pixel_count" class="mg-top-10">How many pixels in sensor</label>
+                <input type="number" class="form-control" min="32" value="32" id="pixel_count">
+
+                <hr>
+                <label for="pixel_distance" class="mg-top-10">Pixel distance</label>
+                <input type="number" min="0" class="form-control" id="pixel_distance">
+
+                <label for="distance_measurement" class="mg-top-10">Distance measurement</label>
+                <input type="text" class="form-control" id="distance_measurement">
+                <hr>
+                <button class="btn btn-default c-button" type="button" onclick="selectPort()">Connect</button>
+
+                <p class="msg" id="msg"></p>
+            </div>
+
+            <div>
+                <hr>
+                <h3>Graphs for sensors data</h3>
+                <div id="graph-wrapper" class="row"></div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Horizontal scale, sensors max values</h3>
+                    <div id="horizontal-scale-block" class="row">
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>Horizontal scale, all pixel values</h3>
+                    <div id="horizontal-scale-pixels-container" class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
+
+                    <div class="scale-wrapper">
+
+                        <div class="scale-numbers" id="scale_numbers">
+                        </div>
+                        <div class="scale-tracker" id="scale_tracker">
+                        </div>
+                        <div class="scale-sensor-container" id="scale_sensor_container">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsum praesentium tempora.
+                        Assumenda
+                        at cum
+                        facere in incidunt ipsa maxime nesciunt perspiciatis provident ratione. Accusantium aperiam
+                        eaque
+                        est
+                        expedita
+                        fugit.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores aut eius fugit
+                        molestiae
+                        numquam quas voluptates. Esse explicabo in laudantium nihil quas quia rerum suscipit voluptates!
+                        Maiores,
+                        sint
+                        sit!
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsum praesentium tempora.
+                        Assumenda
+                        at cum
+                        facere in incidunt ipsa maxime nesciunt perspiciatis provident ratione. Accusantium aperiam
+                        eaque
+                        est
+                        expedita
+                        fugit.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium asperiores aut eius fugit
+                        molestiae
+                        numquam quas voluptates. Esse explicabo in laudantium nihil quas quia rerum suscipit voluptates!
+                        Maiores,
+                        sint
+                        sit!
+                    </p>
+
+                    <hr>
+                    <h4>Logs about maximal value change</h4>
+                    <div id="distance_shift_container" class="distance-shift-container">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.socket.io/4.3.2/socket.io.min.js"
+        integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
+        crossorigin="anonymous"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/scripts/script.js" type="text/javascript"></script>
+
+</body>
+</html>

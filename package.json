@@ -1,0 +1,19 @@
+{
+  "name": "nodeserialportdatainfo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "laser-deformer-watch": "nodemon app.js",
+    "laser-deformer": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-serial": "^0.1.1",
+    "serialport": "^9.2.5",
+    "socket.io": "^4.3.2"
+  }
+}
