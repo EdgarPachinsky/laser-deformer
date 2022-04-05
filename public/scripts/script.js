@@ -1,4 +1,4 @@
-const socket = io("http://localhost:7000");
+const socket = io("http://91.103.29.205:7000");
 
 let activePort = null
 let scaleCount = 0;
