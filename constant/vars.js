@@ -1,5 +1,5 @@
 module.exports = {
     SOCKET_PORT:7000,
-    HOST:'127.0.0.1',
+    HOST:'91.103.29.205',
     PORT:3001,
 }

@@ -10,7 +10,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 const server = http.Server(app);
-const io = new socket.Server(server, {cors: {origin: "http://localhost:3001"}});
+const io = new socket.Server(server, {cors: {origin: "http://91.103.29.205:3001"}});
 
 io.on('connection', (socket) => {
 
