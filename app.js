@@ -48,7 +48,7 @@ app.listen(constants.PORT, constants.HOST, (err) => {
 
         console.log(`STARTING SERVER - OK - : ${constants.PORT}`);
 
-        server.listen(constants.SOCKET_PORT, (err) => {
+        server.listen(constants.SOCKET_PORT, constants.HOST, (err) => {
             if (!err) {
                 console.log(`STARTING SOCKET SERVER - OK - : ${constants.SOCKET_PORT}`);
             } else {
